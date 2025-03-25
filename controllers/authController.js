@@ -40,7 +40,7 @@ exports.adminSignup = async (req, res) => {
 // Consumer Signup
 exports.consumerSignup = async (req, res) => {
     try {
-        const { name, email, password, phone, pincode } = req.body;
+        const { name, email, password, phone, pincode , gender } = req.body;
         
         if (!name || !email || !password || !phone || !pincode) {
             return res.status(400).json({ error: 'All fields are required' });
@@ -51,7 +51,8 @@ exports.consumerSignup = async (req, res) => {
             return res.status(400).json({ error: 'You are already signed up as an Consumer' });
         }
         const hashedPassword = await bcrypt.hash(password, 10);
-        const consumer = new Consumer({ name, email, password: hashedPassword, phone, pincode });
+        const points = 50;
+        const consumer = new Consumer({ name, email, password: hashedPassword, phone, pincode , points ,gender });
         await consumer.save();
 
         const token = generateToken(consumer);
