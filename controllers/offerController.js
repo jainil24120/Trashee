@@ -1,5 +1,7 @@
 const Offer = require('../models/Offer');
-// const Partner = require('../models/Partner');
+const Subscription = require('../models/Subscription');
+const SubscriptionPlan = require('../models/SubscriptionPlan');
+const Partner = require('../models/Partner');
 
 // Create an offer (only partners can create offers)
 exports.createOffer = async (req, res) => {
@@ -9,6 +11,26 @@ exports.createOffer = async (req, res) => {
         // Ensure the user is a partner
         if (req.userRole !== 'partner') {
             return res.status(403).json({ error: 'Only partners can create offers.' });
+        }
+
+          // Check if partner has an active subscription
+          const activeSubscription = await Subscription.findOne({
+            partner: req.userId,
+            status: 'active',
+            endDate: { $gte: new Date() }
+        }).populate('subscriptionPlan');
+
+        if (!activeSubscription) {
+            return res.status(403).json({ error: 'You need an active subscription to create an offer.' });
+        }
+
+        const { subscriptionPlan } = activeSubscription;
+
+        // Count the current number of offers created by the partner
+        const currentOfferCount = await Offer.countDocuments({ partner: req.userId });
+
+        if (currentOfferCount >= subscriptionPlan.noOfOffer) {
+            return res.status(403).json({ error: 'Offer limit reached for your subscription plan.' });
         }
 
         // Create the offer

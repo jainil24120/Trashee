@@ -19,4 +19,13 @@ const subscriptionSchema = new mongoose.Schema({
     status: { type: String, enum: ['active', 'expired', 'canceled','in_process'], default: 'active' },
     createdAt: { type: Date, default: Date.now }
 });
+
+// Middleware to check and auto-expire subscriptions
+subscriptionSchema.pre('save', async function (next) {
+    if (this.endDate < new Date() && this.status === 'active') {
+      this.status = 'expired';
+    }
+    next();
+  });
+      
 module.exports = mongoose.model('Subscription', subscriptionSchema);

@@ -85,7 +85,7 @@
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YzkyYzNjNmFiYzhkMTkyYjhjNzdkMSIsImVtYWlsIjoicmFrc2hpdGJoYWlAZ21haWwuY29tIiwiaWF0IjoxNzQyMDE4MzQ5LCJleHAiOjE3NDIxMDQ3NDl9.K-rKMRuKnJaZrrvzbEsqwTZNIGAHJ6eyiIPDkL65CWE`  // Use a proper token mechanism
+            "Authorization": `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YzkyYzNjNmFiYzhkMTkyYjhjNzdkMSIsImVtYWlsIjoicmFrc2hpdGJoYWlAZ21haWwuY29tIiwiaWF0IjoxNzQyNjI2NzUyLCJleHAiOjE3NDI3MTMxNTJ9.ZKmoPY1n1I-tl0F_71Cl3Ha-dIrZuay8LWVVmADtbXE`  // Use a proper token mechanism
           },
           body: JSON.stringify({ subscriptionId }),
         });
@@ -105,7 +105,7 @@
 
         // Step 2: Initialize Razorpay payment
         const options = {
-          key: "rzp_test_00c36kD21CoCL3",
+          key: "rzp_test_B2difNmRzT855c",
           amount: amount,
           currency: currency,
           order_id: id,

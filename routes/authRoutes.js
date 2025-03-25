@@ -14,6 +14,4 @@ router.post('/login/consumer', (req, res) => login(req, res, Consumer));
 router.post('/login/partner', (req, res) => login(req, res, Partner));
 router.post('/login/admin', (req, res) => login(req, res, Admin));
 
-
-
 module.exports = router;

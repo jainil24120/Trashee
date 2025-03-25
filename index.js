@@ -9,6 +9,7 @@ const offerRoutes = require('./routes/offerRoutes'); // Add this line
 const cors = require('cors');
 const paymentRoutes = require('./routes/paymentRoutes');
 const subscription = require("./routes/subscribeRoutes");
+const dustbin = require("./routes/dustbinRoutes");
 
 const app = express();
 app.use(express.json());
@@ -30,6 +31,11 @@ app.use('/api/admin', adminRoutes);
 app.use('/api', offerRoutes); // Add this line
 app.use('/api/subscription',paymentRoutes);
 app.use('/api/subscriptionplan',subscription);
+app.use('/api/dustbin',dustbin);
+
+app.get('/',(req,res)=>{
+    res.send("hellow world");
+})
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

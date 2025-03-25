@@ -17,8 +17,30 @@ exports.createOrder = async (req, res) => {
             return res.status(401).json({ success: false, message: "Unauthorized: No token provided" });
         }
         
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        const user = await Partner.findOne({ email: decoded.email });
+        // verify 
+        const verifyToken = (token) => {
+            try {
+                const decoded = jwt.verify(token, process.env.JWT_SECRET);
+              return { valid: true, expired: false, decoded };
+            } catch (error) {
+              if (error instanceof jwt.TokenExpiredError) {
+                return { valid: false, expired: true, message: "Token has expired" };
+              }
+              return { valid: false, expired: false, message: error.message };
+            }
+          };
+
+          const result = verifyToken(token);
+
+          if (result.valid) {
+            console.log("✅ Token is valid:", result.decoded);
+          } else if (result.expired) {
+            console.error("⛔ Token has expired:", result.message);
+          } else {
+            return res.status(401).json({ success: false, message: "Invalid token." });
+          }
+        
+        const user = await Partner.findOne({ email: result.email });
         
         if (!user) {
             return res.status(404).json({ success: false, message: "Partner not found" });
