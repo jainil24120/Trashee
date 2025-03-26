@@ -10,7 +10,7 @@ router.post('/offers', verifyToken, isPartner, createOffer);
 router.get('/offers', verifyToken, getAllOffers);
 
 // Update an offer (partners and admins can update)
-router.put('/offers/:id', verifyToken, updateOffer);
+router.put('/offers/:id', verifyToken,isAdmin, updateOffer);
 
 // Delete an offer (partners and admins can delete)
 router.delete('/offers/:id', verifyToken, isAdmin, deleteOffer);
