@@ -41,3 +41,9 @@ exports.isPartner = (req, res, next) => {
     if (req.userRole !== 'partner') return res.status(403).json({ error: 'Access denied. Only partners can perform this action.' });
     next();
 };
+
+exports.isConsumer = (req, res, next) => {
+    if (req.userRole !== 'consumer') return res.status(403).json({ error: 'Access denied. Only consumer can perform this action.' });
+    next();
+};
+

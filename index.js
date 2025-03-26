@@ -10,7 +10,7 @@ const cors = require('cors');
 const paymentRoutes = require('./routes/paymentRoutes');
 const subscription = require("./routes/subscribeRoutes");
 const dustbin = require("./routes/dustbinRoutes");
-
+const binPoints = require("./routes/binPointsRoutes");
 const app = express();
 app.use(express.json());
 // Allow requests from your Flutter frontend
@@ -32,7 +32,7 @@ app.use('/api', offerRoutes); // Add this line
 app.use('/api/subscription',paymentRoutes);
 app.use('/api/subscriptionplan',subscription);
 app.use('/api/dustbin',dustbin);
-
+app.use('/api/binpoint', binPoints);
 app.get('/',(req,res)=>{
     res.send("hellow world");
 })
